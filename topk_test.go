@@ -13,7 +13,7 @@ import (
 
 type freqs struct {
 	keys   []string
-	counts map[string]int
+	counts map[string]int64
 }
 
 func (f freqs) Len() int { return len(f.keys) }
@@ -36,7 +36,7 @@ func TestTopK(t *testing.T) {
 	scanner := bufio.NewScanner(f)
 
 	tk := New(100)
-	exact := make(map[string]int)
+	exact := make(map[string]int64)
 
 	for scanner.Scan() {
 

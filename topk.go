@@ -29,8 +29,8 @@ import (
 // Element is a TopK item
 type Element struct {
 	Key   string
-	Count int
-	Error int
+	Count int64
+	Error int64
 }
 
 type elementsByCountDescending []Element
@@ -79,7 +79,7 @@ func (tk *keys) Pop() interface{} {
 type Stream struct {
 	n      int
 	k      keys
-	alphas []int
+	alphas []int64
 }
 
 // New returns a Stream estimating the top n most frequent elements
@@ -87,7 +87,7 @@ func New(n int) *Stream {
 	return &Stream{
 		n:      n,
 		k:      keys{m: make(map[string]int), elts: make([]Element, 0, n)},
-		alphas: make([]int, n*6), // 6 is the multiplicative constant from the paper
+		alphas: make([]int64, n*6), // 6 is the multiplicative constant from the paper
 	}
 }
 
@@ -97,7 +97,7 @@ func reduce(x uint64, n int) uint32 {
 
 // Insert adds an element to the stream to be tracked
 // It returns an estimation for the just inserted element
-func (s *Stream) Insert(x string, count int) Element {
+func (s *Stream) Insert(x string, count int64) Element {
 
 	xhash := reduce(sip13.Sum64Str(0, 0, x), len(s.alphas))
 

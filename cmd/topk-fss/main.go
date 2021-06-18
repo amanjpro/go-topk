@@ -39,7 +39,7 @@ func main() {
 	for sc.Scan() {
 		line := sc.Text()
 
-		var count int
+		var count int64
 		var item string
 
 		if *counts {
@@ -50,7 +50,7 @@ func main() {
 				continue
 			}
 			item = fields[0]
-			count = cint
+			count = int64(cint)
 		} else {
 			item = line
 			count = 1
